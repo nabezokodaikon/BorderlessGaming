@@ -391,3 +391,4 @@ FodyWeavers.xsd
 
 
 *.sqlite
+*.link
