@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "BorderlessGaming": {
-      "commandName": "Project",
-      "commandLineArgs": "StreetFighterV"
-    }
-  }
-}

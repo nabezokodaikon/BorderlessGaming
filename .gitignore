@@ -393,3 +393,4 @@ FodyWeavers.xsd
 *.sqlite
 *.link
 shortcut/
+src/Properties/
