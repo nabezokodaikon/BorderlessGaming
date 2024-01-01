@@ -20,8 +20,8 @@ namespace BorderlessGaming
         private const int SWP_NOOWNERZORDER = 0x0200;
         private const int SWP_NOZORDER = 0x0004;
 
-        private static readonly int WINDOW_WIDTH = (int)(2560 / 1.25);
-        private static readonly int WINDOW_HEIGHT = (int)(1440 / 1.25);
+        private static readonly int WINDOW_WIDTH = 1920;
+        private static readonly int WINDOW_HEIGHT = 1080;
 
         public enum SystemMetric : int
         {
