@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace BorderlessGaming
@@ -16,21 +15,11 @@ namespace BorderlessGaming
 
         private const int SWP_FRAMECHANGED = 0x0020;
         private const int SWP_NOSIZE = 0x0001;
-        private const int SWP_NOMOVE = 0x0002;
         private const int SWP_NOOWNERZORDER = 0x0200;
         private const int SWP_NOZORDER = 0x0004;
 
         private static readonly int WINDOW_WIDTH = 1920;
         private static readonly int WINDOW_HEIGHT = 1080;
-
-        public enum SystemMetric : int
-        {
-            SM_CXVIRTUALSCREEN = 78,
-            SM_CYVIRTUALSCREEN = 79,
-        }
-
-        [DllImport("user32.dll")]
-        private static extern int GetSystemMetrics(SystemMetric smIndex);
 
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
@@ -54,9 +43,16 @@ namespace BorderlessGaming
             SetWindowPos(hWnd, 0, 0, 0, 0, 0,
                 SWP_FRAMECHANGED | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
 
-            var screenWidth = GetSystemMetrics(SystemMetric.SM_CXVIRTUALSCREEN);
-            Console.WriteLine(screenWidth);
-            MoveWindow(hWnd, screenWidth / 4, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 1);
+            var taskBarHeight
+                = SystemInformation.PrimaryMonitorSize.Height
+                - SystemInformation.WorkingArea.Height;
+
+            var h = WINDOW_HEIGHT - taskBarHeight;
+            var scale = h / (float)WINDOW_HEIGHT;
+            var w = WINDOW_WIDTH * scale;
+            var x = (SystemInformation.PrimaryMonitorSize.Width - w) / 2f;
+            var y = 0;
+            MoveWindow(hWnd, (int)x, y, (int)w, h, 1);
         }
 
         public static void Main(string[] args)
